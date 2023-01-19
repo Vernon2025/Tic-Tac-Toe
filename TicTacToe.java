@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
@@ -7,11 +6,18 @@ public class TicTacToe {
 
         Scanner scanner = new Scanner(System.in);
 
+
+
+        //Makes positions of board
+
         char[][] board = {{' ', ' ', ' '},
                           {' ', ' ', ' '},
                           {' ', ' ', ' '}};
 
         printBoard(board);
+
+
+
 
         while (true) {
             playerTurn(board, scanner);
@@ -28,6 +34,7 @@ public class TicTacToe {
         }
         scanner.close();
     }
+
 
 
     private static boolean isGameFinished(char[][] board) {
@@ -52,11 +59,11 @@ public class TicTacToe {
             }
         }
         printBoard(board);
-        System.out.println("The game ended in a tie!");
+        System.out.println("Tie!");
         return true;
     }
 
-
+    //Different ways you or your opponents can win
     private static boolean hasContestantWon(char[][] board, char symbol) {
         if ((board[0][0] == symbol && board [0][1] == symbol && board [0][2] == symbol) ||
                 (board[1][0] == symbol && board [1][1] == symbol && board [1][2] == symbol) ||
@@ -75,10 +82,9 @@ public class TicTacToe {
 
 
     private static void computerTurn(char[][] board) {
-        Random rand = new Random();
         int computerMove;
         while (true) {
-            computerMove = rand.nextInt(9) + 1;
+            computerMove = (int)(Math.random() * 9) + 1;
             if (isValidMove(board, Integer.toString(computerMove))) {
                 break;
             }
@@ -127,6 +133,7 @@ public class TicTacToe {
         placeMove(board, userInput, 'X');
     }
 
+    //Everywhere on the board the player can place an "X"
 
     private static void placeMove(char[][] board, String position, char symbol) {
         switch(position) {
@@ -158,12 +165,12 @@ public class TicTacToe {
                 board[2][2] = symbol;
                 break;
             default:
-                System.out.println(":(");
+                System.out.println("My secret message! :)");
         }
     }
 
 
-
+    //Prints the board in terminal
 
     private static void printBoard(char[][] board) {
         System.out.println(board[0][0] + "|" +  board[0][1] + "|" +  board[0][2] );
