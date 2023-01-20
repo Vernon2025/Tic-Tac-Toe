@@ -6,8 +6,6 @@ public class TicTacToe {
 
         Scanner scanner = new Scanner(System.in);
 
-
-
         //Makes positions of board
 
         char[][] board = {{' ', ' ', ' '},
@@ -16,17 +14,14 @@ public class TicTacToe {
 
         printBoard(board);
 
-
-
-
         while (true) {
-            playerTurn(board, scanner);
+            player1Turn(board, scanner);
             if (isGameFinished(board)){
                 break;
             }
             printBoard(board);
 
-            computerTurn(board);
+            player2Turn(board, scanner);
             if (isGameFinished(board)){
                 break;
             }
@@ -35,22 +30,22 @@ public class TicTacToe {
         scanner.close();
     }
 
-
-
     private static boolean isGameFinished(char[][] board) {
 
         if (hasContestantWon(board, 'X')) {
             printBoard(board);
-            System.out.println("Player wins!");
+            System.out.println("Player 1 wins!");
             return true;
         }
 
         if (hasContestantWon(board, 'O')) {
             printBoard(board);
-            System.out.println("Computer wins!");
+            System.out.println("Player 2 wins!");
             return true;
         }
-
+        /* For loop that goes through each spot on the board (going by rows and columns)
+         and if the space is blank it means game is not finished
+         */
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == ' ') {
@@ -81,19 +76,6 @@ public class TicTacToe {
     }
 
 
-    private static void computerTurn(char[][] board) {
-        int computerMove;
-        while (true) {
-            computerMove = (int)(Math.random() * 9) + 1;
-            if (isValidMove(board, Integer.toString(computerMove))) {
-                break;
-            }
-        }
-        System.out.println("Computer chose " + computerMove);
-        placeMove(board, Integer.toString(computerMove), 'O');
-    }
-
-
     private static boolean isValidMove (char[][] board, String position) {
         switch(position) {
             case "1":
@@ -119,9 +101,10 @@ public class TicTacToe {
         }
     }
 
-    private static void playerTurn(char[][] board, Scanner scanner) {
+    private static void player1Turn(char[][] board, Scanner scanner) {
         String userInput;
         while (true) {
+            System.out.println("Player 1:");
             System.out.println("Where would you like to play? (1-9)");
             userInput = scanner.nextLine();
             if (isValidMove(board, userInput)){
@@ -131,6 +114,20 @@ public class TicTacToe {
             }
         }
         placeMove(board, userInput, 'X');
+    }
+    private static void player2Turn(char[][] board, Scanner scanner) {
+        String userInput;
+        while (true) {
+            System.out.println("Player 2:");
+            System.out.println("Where would you like to play? (1-9)");
+            userInput = scanner.nextLine();
+            if (isValidMove(board, userInput)){
+                break;
+            } else {
+                System.out.println(userInput + " is not a valid move.");
+            }
+        }
+        placeMove(board, userInput, 'O');
     }
 
     //Everywhere on the board the player can place an "X"
